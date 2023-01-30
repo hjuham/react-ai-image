@@ -4,7 +4,8 @@ import ImageGenerator from './components/ImageGenerator';
 import Banner from './components/Banner';
 import Home from './components/Home';
 import CompletionGenerator from './components/CompletionGenerator';
-
+import EditGenerator from './components/EditGenerator'
+import Footer from './components/Footer'
 
 function App() {
 
@@ -15,7 +16,9 @@ function App() {
                 <Route path="/imagegenerator" element={<ImageGenerator />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/completiongenerator" element={<CompletionGenerator />} />
+                <Route path="/editgenerator" element={<EditGenerator />} />
             </Routes>
+            <Footer />
         </div >
     );
 }

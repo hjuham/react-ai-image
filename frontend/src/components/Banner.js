@@ -9,9 +9,15 @@ export default function Banner() {
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1, marginTop: '1em', marginLeft: '1em' }}>
                         OpenAI Generator
+                        |
                         <Button component={Link} to={'/'}>Home</Button>
+                        |
                         <Button component={Link} to={'/imagegenerator'}>Image generator</Button>
+                        |
                         <Button component={Link} to={'/completiongenerator'}>Completion generator</Button>
+                        |
+                        <Button component={Link} to={'/editgenerator'}>Edit generator</Button>
+                        |
                     </Typography>
                     <MUILink variant="h6" underline="hover" href="https://beta.openai.com/overview" target='_blank' rel="noreferrer" sx={{ color: 'white', paddingTop: '1em' }}>
                         OpenAI website

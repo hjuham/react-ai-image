@@ -21,7 +21,7 @@ export default function CompletionGenerator() {
         if (!text) {
             setError('Write some text to generate an image')
         } else {
-            axios.post(`http://localhost:${process.env.REACT_APP_PORT}/openai/generateCompletion`, {
+            axios.post(`${process.env.REACT_APP_BACKEND}/openai/generateCompletion`, {
                 prompt: text
             })
                 .then(

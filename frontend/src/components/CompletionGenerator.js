@@ -1,38 +1,45 @@
-import React, { useState } from 'react';
-import { Box, Typography, Button, FormControl, TextField, CircularProgress, Alert } from '@mui/material';
-import axios from 'axios';
+import React, { useState } from "react";
+import {
+    Box,
+    Typography,
+    Button,
+    FormControl,
+    TextField,
+    CircularProgress,
+    Alert,
+} from "@mui/material";
+import axios from "axios";
 
 const divStyle = {
-    textAlign: 'center',
-    backgroundColor: '#a42cd6',
-    height: '80vh'
-}
+    textAlign: "center",
+    backgroundColor: "#a42cd6",
+    height: "80vh",
+};
 export default function CompletionGenerator() {
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
-    const [text, setText] = useState('')
-    const [description, setDescription] = useState('')
-    const [response, setResponse] = useState('')
-    const [finishReason, setFinishReason] = useState('')
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [text, setText] = useState("");
+    const [description, setDescription] = useState("");
+    const [response, setResponse] = useState("");
+    const [finishReason, setFinishReason] = useState("");
     async function handleSubmit(event) {
-        event.preventDefault()
-        setLoading(true)
-        setError('')
+        event.preventDefault();
+        setLoading(true);
+        setError("");
         if (!text) {
-            setError('Write some text to generate an image')
+            setError("Write some text to generate an image");
         } else {
-            axios.post(`${process.env.REACT_APP_BACKEND}/openai/generateCompletion`, {
-                prompt: text
-            })
-                .then(
-                    function (response) {
-                        setDescription(response.data.prompt)
-                        setResponse(response.data.data)
-                        setFinishReason(response.data.finish_reason)
-                        setText('')
-                        setLoading(false)
-                    }
-                )
+            axios
+                .post(`http://localhost:5000/openai/generateCompletion`, {
+                    prompt: text,
+                })
+                .then(function (response) {
+                    setDescription(response.data.prompt);
+                    setResponse(response.data.data);
+                    setFinishReason(response.data.finish_reason);
+                    setText("");
+                    setLoading(false);
+                })
                 .catch(function (error) {
                     console.log(error);
                 });
@@ -40,13 +47,20 @@ export default function CompletionGenerator() {
     }
     return (
         <div style={divStyle}>
-            <Box sx={{ flexGrow: 1, textAlign: 'center', pt: '5em' }}>
+            <Box sx={{ flexGrow: 1, textAlign: "center", pt: "5em" }}>
                 <FormControl>
-                    <Typography variant="h3" sx={{}}>Generate a response</Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Typography variant="h3" sx={{}}>
+                        Generate a response
+                    </Typography>
+                    <Box
+                        component="form"
+                        onSubmit={handleSubmit}
+                        noValidate
+                        sx={{ mt: 1 }}
+                    >
                         <TextField
                             value={text}
-                            onChange={event => setText(event.target.value)}
+                            onChange={(event) => setText(event.target.value)}
                             margin="normal"
                             required
                             fullWidth
@@ -54,10 +68,10 @@ export default function CompletionGenerator() {
                             id="text"
                             label="Prompt"
                             name="text"
-                            sx={{ backgroundColor: 'white' }}
+                            sx={{ backgroundColor: "white" }}
                         />
                         <Button
-                            disabled={loading || text === ''}
+                            disabled={loading || text === ""}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -65,21 +79,36 @@ export default function CompletionGenerator() {
                         >
                             Generate
                         </Button>
-                        <Typography>
-                            {error}
-                        </Typography>
+                        <Typography>{error}</Typography>
                     </Box>
                 </FormControl>
             </Box>
-            <Box sx={{ textAlign: 'center' }}>
-                {loading && <CircularProgress></CircularProgress>}<br></br>
-                {!loading &&
+            <Box sx={{ textAlign: "center" }}>
+                {loading && <CircularProgress></CircularProgress>}
+                <br></br>
+                {!loading && (
                     <>
-                        <Typography sx={{ color: '#24292f', fontWeight: 'bold' }}>You: {description}</Typography>
-                        <Typography sx={{ color: '#24292f', fontWeight: 'bold' }}>AI: {response}</Typography>
-                    </>}
-                {finishReason !== 'length' ? <></> : <Alert severity="error" sx={{ width: '30%', ml: '35%' }}>The response was too long to generate completely. Try a simpler prompt next time.</Alert>}
+                        <Typography
+                            sx={{ color: "#24292f", fontWeight: "bold" }}
+                        >
+                            You: {description}
+                        </Typography>
+                        <Typography
+                            sx={{ color: "#24292f", fontWeight: "bold" }}
+                        >
+                            AI: {response}
+                        </Typography>
+                    </>
+                )}
+                {finishReason !== "length" ? (
+                    <></>
+                ) : (
+                    <Alert severity="error" sx={{ width: "30%", ml: "35%" }}>
+                        The response was too long to generate completely. Try a
+                        simpler prompt next time.
+                    </Alert>
+                )}
             </Box>
         </div>
-    )
+    );
 }

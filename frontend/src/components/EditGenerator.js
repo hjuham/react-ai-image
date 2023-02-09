@@ -31,7 +31,7 @@ export default function EditGenerator() {
             setError("Write some text to generate an edit");
         } else {
             axios
-                .post(`http://localhost:5000/openai/generateEdit`, {
+                .post(`${process.env.REACT_APP_BACKEND}/openai/generateEdit`, {
                     prompt: text,
                     instruction,
                 })

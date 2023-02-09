@@ -30,9 +30,12 @@ export default function CompletionGenerator() {
             setError("Write some text to generate an image");
         } else {
             axios
-                .post(`http://localhost:5000/openai/generateCompletion`, {
-                    prompt: text,
-                })
+                .post(
+                    `${process.env.REACT_APP_BACKEND}/openai/generateCompletion`,
+                    {
+                        prompt: text,
+                    }
+                )
                 .then(function (response) {
                     setDescription(response.data.prompt);
                     setResponse(response.data.data);

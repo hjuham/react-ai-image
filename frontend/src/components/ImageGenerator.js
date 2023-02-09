@@ -35,7 +35,7 @@ export default function ImageGenerator() {
             setError("Write some text to generate an image");
         } else {
             axios
-                .post(`http://localhost:5000/openai/generateImage`, {
+                .post(`${process.env.REACT_APP_BACKEND}/openai/generateImage`, {
                     prompt: text,
                     size: size,
                 })
@@ -55,7 +55,7 @@ export default function ImageGenerator() {
         setLoading(true);
         setError("");
         axios
-            .get(`http://localhost:5000/openai/generateImage`, {})
+            .get(`${process.env.REACT_APP_BACKEND}/openai/generateImage`, {})
             .then(function (response) {
                 setImage(response.data.data);
                 setDescription(response.data.prompt);
